@@ -8,5 +8,7 @@ const crud_controllers_1 = __importDefault(require("./crud.controllers"));
 const router = (0, express_1.Router)();
 router.get("/get", crud_controllers_1.default.getAllData);
 router.post("/add", crud_controllers_1.default.addNewData);
+router.delete("/delete/:id", crud_controllers_1.default.deleteData);
+router.patch("/patch/:id", crud_controllers_1.default.patchData);
 exports.default = router;
 //# sourceMappingURL=crud.routes.js.map
