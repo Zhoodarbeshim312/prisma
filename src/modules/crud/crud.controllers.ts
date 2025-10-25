@@ -15,6 +15,25 @@ const getAllData = async (req: Request, res: Response) => {
     });
   }
 };
+const getOneData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Error in getOneData: ${error}`,
+    });
+  }
+};
 const addNewData = async (req: Request, res: Response) => {
   try {
     const { name, age } = req.body;
@@ -104,6 +123,7 @@ const putData = async (req: Request, res: Response) => {
 };
 export default {
   getAllData,
+  getOneData,
   addNewData,
   deleteData,
   patchData,
