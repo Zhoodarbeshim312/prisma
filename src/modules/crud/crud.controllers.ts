@@ -78,9 +78,34 @@ const patchData = async (req: Request, res: Response) => {
     });
   }
 };
+const putData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { name, age } = req.body;
+    const user = await prisma.user.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        name,
+        age,
+      },
+    });
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: `Error in putData: ${error}`,
+    });
+  }
+};
 export default {
   getAllData,
   addNewData,
   deleteData,
   patchData,
+  putData,
 };
