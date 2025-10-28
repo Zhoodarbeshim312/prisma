@@ -19,6 +19,26 @@ const getAllData = async (req, res) => {
         });
     }
 };
+const getOneData = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await prisma_1.default.user.findUnique({
+            where: {
+                id: Number(id),
+            },
+        });
+        res.status(200).json({
+            success: true,
+            user,
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            error: `Error in getOneData: ${error}`,
+        });
+    }
+};
 const addNewData = async (req, res) => {
     try {
         const { name, age } = req.body;
@@ -85,10 +105,37 @@ const patchData = async (req, res) => {
         });
     }
 };
+const putData = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, age } = req.body;
+        const user = await prisma_1.default.user.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                name,
+                age,
+            },
+        });
+        res.status(200).json({
+            success: true,
+            user,
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            error: `Error in putData: ${error}`,
+        });
+    }
+};
 exports.default = {
     getAllData,
+    getOneData,
     addNewData,
     deleteData,
     patchData,
+    putData,
 };
 //# sourceMappingURL=crud.controllers.js.map
